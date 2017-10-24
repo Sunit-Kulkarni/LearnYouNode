@@ -1,12 +1,12 @@
-var pathName = process.argv[2]
-var extension = "." + process.argv[3]
-var myModule = require('./theModule')
-var path = require('path')
+var filterFn = require('./theModule.js')
+var dir = process.argv[2]
+var filterStr = process.argv[3]
 
-function printFiles(file) {
-	if (path.extname(file) === extension) {
-		console.log(file)
-	}
-}
+filterFn(dir, filterStr, function (err, list) {
+  if (err)
+    return console.error('There was an error:', err)
 
-myModule(pathName, extension, printFiles)
+  list.forEach(function (file) {
+    console.log(file)
+  })
+})

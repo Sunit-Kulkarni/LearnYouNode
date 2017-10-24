@@ -1,21 +1,16 @@
 var fs = require('fs')
+var path = require('path')
 
+module.exports = function (dir, filterStr, callback) {
 
+  fs.readdir(dir, function (err, list) {
+    if (err)
+      return callback(err)
 
-module.exports = function (directoryName, extension, callback) {
-	
-	fs.readdir(directoryName, function (err, files) {
+    list = list.filter(function (file) {
+      return path.extname(file) === '.' + filterStr
+    })
 
-		if (err) {
-			return callback(err)
-		}
-		//console.log(files)
-		files.forEach(function (element) {
-			//console.log(element)
-			callback(element)
-		})
-		
-	})
+    callback(null, list)
+  })
 }
-
-
